@@ -1,0 +1,7 @@
+{
+  "name": "proiect-normal",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
