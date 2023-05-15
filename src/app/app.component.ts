@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FirebaseAuthService } from './services/firebaseAuth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,20 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(
+    private firebaseAuth: FirebaseAuthService,
+    private router: Router
+  ) {}
+
+  createGroup(){
+   this.router.navigate(['addGroup'])
+  }
+
+  goHome(){
+    this.router.navigate(['home'])
+  }
+
+  signOut(){
+    this.firebaseAuth.signOut()
+  }
 }

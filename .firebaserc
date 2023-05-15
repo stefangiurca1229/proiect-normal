@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "faculta-8f821": {
+      "hosting": {
+        "app": [
+          "faculta-8f821"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "faculta-8f821"
+  }
+}

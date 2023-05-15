@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "543614826226",
+    "firebase_url": "https://faculta-8f821-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "faculta-8f821",
+    "storage_bucket": "faculta-8f821.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543614826226:android:b2354b64ccc05caa5a426b",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543614826226-ltl4n4kibi5h1oqieodi6pbcupfrk91b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "115ef01f32bda6468d2182130048ecd6b51d8952"
+          }
+        },
+        {
+          "client_id": "543614826226-blfe87flt3b93hdbos9ecgpktshi46se.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAic8vziOO4_84xyJDX1ScQTulkhGN12jA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543614826226-8r1dem93h3mb1edvc2ge7r1mjmq600ok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
