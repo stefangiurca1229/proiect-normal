@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ChatComponent } from './chat.component';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { SharedModule } from '../components/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -10,7 +12,9 @@ import { IonicModule } from '@ionic/angular';
   declarations: [ChatComponent],
   imports: [
     IonicModule,
+    FormsModule,
     CommonModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: '',

@@ -5,6 +5,7 @@ import { ButtonProiectComponent } from '../components/button-proiect/button-proi
 import { SigninMobileProiectComponent } from '../components/signin-mobile-proiect/signin-mobile-proiect.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../components/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -13,6 +14,7 @@ import { SharedModule } from '../components/shared.module';
     SignInNativeComponent
   ],
   imports: [
+    FormsModule,
     CommonModule,
     SharedModule,
     RouterModule.forChild([

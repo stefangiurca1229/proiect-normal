@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { isMobileApp } from './guards/login-mobile.guard';
+import { isMobileApp, isNotMobile } from './guards/login-mobile.guard';
 import { getLoginStatus, getLoginStatusForLogin } from './guards/loginStatus.guard';
 
 const routes: Routes = [
@@ -16,17 +16,17 @@ const routes: Routes = [
   },
   {
      path: 'login',
-     canActivate: [getLoginStatusForLogin],
+     canActivate: [getLoginStatusForLogin, isNotMobile],
      loadChildren: () => import('./login/login.module').then( m => m.LoginModule)
   },
   {
    path: 'signIn-mobile',
-   canActivate: [isMobileApp],
+  //  canActivate: [isMobileApp],
    loadChildren: () => import('./sign-in-native/sign-in-native.module').then( m => m.SignInNativeModule)
   },
   {
   path: 'login-mobile',
-  canActivate: [isMobileApp],
+  // canActivate: [isMobileApp],
   loadChildren: () => import('./login-native/login-native.module').then( m => m.LoginNativeModule)
   },
   {

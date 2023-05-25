@@ -14,6 +14,7 @@ import { AngularFireModule } from "@angular/fire/compat";
 import { ButtonProiectComponent } from './components/button-proiect/button-proiect.component';
 import { SigninMobileProiectComponent } from './components/signin-mobile-proiect/signin-mobile-proiect.component';
 import { SharedModule } from './components/shared.module';
+import { FormsModule } from '@angular/forms';
 
 // import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 // import { AngularFireDatabaseModule } from "@angular/fire/compat/database";
@@ -24,6 +25,7 @@ import { SharedModule } from './components/shared.module';
   ],
   imports: [
     HttpClientModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     SharedModule,
     BrowserModule, 

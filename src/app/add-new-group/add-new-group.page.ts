@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastController } from '@ionic/angular';
 import { map, take } from 'rxjs';
+import { FirebaseAuthService } from '../services/firebaseAuth.service';
 import { AddNewGroupService } from './add-new-group.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class AddNewGroupPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private addNewGroupService: AddNewGroupService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private firebaseAuthService: FirebaseAuthService
   ) {
     this.myForm = this.fb.group({
       groupName: ["", Validators.required],
@@ -79,6 +81,16 @@ export class AddNewGroupPage implements OnInit {
       (groupAllreadyExists) =>{
         if(!groupAllreadyExists){
           this.validUsers = 0
+          this.firebaseAuthService.getUserInfo()
+                                  .pipe(take(1))
+                                  .subscribe(
+                                    (user: any) =>{
+                                      this.addNewGroupService.usersQueue.next({
+                                        email: user.email,
+                                        groupName: this.groupName.value
+                                      })
+                                    }
+                                  )
           for(let user of this.inputs.controls){
             console.log(user.value)
             this.addNewGroupService.usersQueue.next({

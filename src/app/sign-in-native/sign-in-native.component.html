@@ -1,2 +1,2 @@
-<signin-mobile-proiect></signin-mobile-proiect>
-<button-proiect [buttonText]="'create acount'"></button-proiect>
+<signin-mobile-proiect class="mt-5" (authUser)="signIn($event)"></signin-mobile-proiect>
+<button-proiect [buttonText]="'create acount'" (click)="goLogin()"></button-proiect>

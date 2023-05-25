@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
+import { IChat } from '../interfaces/IChat';
 import { ChatService } from '../services/chat.service';
 import { FirebaseAuthService } from '../services/firebaseAuth.service';
 
@@ -29,17 +30,32 @@ export class HomePage implements OnInit {
           this.chatService.getUserChats(user.email)
             .pipe(take(1))
             .subscribe(
-              (chats: any[]) =>{
+              (chats: any[]) => {
                 console.log(chats)
                 this.chats = chats
               }
             )
         }
       )
+    this.chatService.chats.subscribe(
+      (chats: IChat[] | undefined) =>{
+        if(chats){
+          this.chats = chats
+        }
+      }
+    )
   }
 
-  openChat(chat: string){
-    this.router.navigate(['chat'],{queryParams: {groupName: chat}})
+  openChat(chat: string) {
+    this.router.navigate(['chat'], { queryParams: { groupName: chat } })
+  }
+
+  exitGroup(chat: string){
+    this.chatService.exitGroup(chat)
+  }
+
+  deleteGroup(chat: string){
+    this.chatService.deleteGroup(chat)
   }
 
 }

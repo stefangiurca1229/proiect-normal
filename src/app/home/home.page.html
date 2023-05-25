@@ -1,13 +1,40 @@
+<div id="container">
 
+  <h1 class="text-justify" *ngIf="chats.length == 0"> you have no chats</h1>
 
-  <div id="container">
-    <h1 class="text-justify" *ngIf="chats.length == 0"> you have no chats</h1>
+  <h1 class="text-justify" *ngIf="chats.length != 0">your chats: </h1>
 
-    <h1 class="text-justify" *ngIf="chats.length != 0">your chats: </h1>
-    <ion-card *ngFor="let chat of chats" (click)="openChat(chat)">
-      <ion-card-header>
-        <ion-card-title>{{chat}}</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
+  <div class="chats">
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item" *ngFor="let chat of chats">
+        <div class="row">
+          <div class="col-2">
+            <p (click)="openChat(chat)" class="text-black">{{chat}}</p>
+          </div>
+          <div class="col-10">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapseOne' + chat" aria-expanded="false" aria-controls="collapseOne">
+                edit
+              </button>
+            </h2>
+            <div [attr.id]="'collapseOne' + chat" class="accordion-collapse collapse" aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="row mt-2">
+                  <div class="col-6">
+                    <button class="btn btn-outline-danger" (click) = "deleteGroup(chat)">delete group</button>
+                  </div>
+                  <div class="col-6">
+                    <button class="btn btn-outline-danger" (click) = "exitGroup(chat)">exit group</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+</div>

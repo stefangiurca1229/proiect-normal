@@ -8,6 +8,9 @@ import { IChat } from "../interfaces/IChat";
 import { IUser } from "../interfaces/IUser";
 import { FirebaseApp, initializeApp } from "@firebase/app";
 import { environment } from "src/environments/environment";
+import { ChatService } from "../services/chat.service";
+import { Router } from "@angular/router";
+import { FirebaseAuthService } from "../services/firebaseAuth.service";
 
 @Injectable({
     providedIn: "root"
@@ -20,6 +23,9 @@ export class AddNewGroupService {
 
     constructor(
         private fireStore: AngularFirestore,
+        private chatService: ChatService,
+        private router: Router,
+        private auth: FirebaseAuthService
         // private db: AngularFireDatabase
     ) {
         this.app = initializeApp(environment.firebase);
@@ -27,7 +33,7 @@ export class AddNewGroupService {
 
         this.usersQueue.pipe(
             concatMap(
-               async (data: any ) => {
+                async (data: any) => {
                     const userRef = this.fireStore.collection('users').doc(data.email);
                     const groupRef = this.fireStore.collection('chats').doc(data.groupName);
 
@@ -37,24 +43,60 @@ export class AddNewGroupService {
                     const userData = userSnapshot?.data() as IUser;
                     const groupData = groupSnapshot?.data() as IChat;
 
-                    groupData.users.push({
-                        email: data.email,
-                        userName: userData.userName
-                    });
-                    userData.chats.push(data.groupName);
-
-                    const userSet = await userRef.set(userData).then(
-                        () => console.log(userData, "salvat")
+                    let userDontExist = true;
+                    groupData.users.forEach(
+                        (u: any) => {
+                            if (u.email == data.email)
+                                userDontExist = false;
+                        }
                     )
 
-                    const groupSet = await groupRef.set(groupData).then(
-                        () => console.log(groupData, "group data salvat")
-                    )
+                    if (userDontExist) {
+                        groupData.users.push({
+                            email: data.email,
+                            userName: userData.userName
+                        });
+                        const groupSet = await groupRef.set(groupData).then(
+                            () => {
+                                console.log(groupData, "group data salvat")
+                            }
+                        )
+                    }
+
+                    if (!userData.chats.includes(data.groupName)) {
+                        userData.chats.push(data.groupName);
+
+                        const userSet = await userRef.set(userData).then(
+                            () => console.log(userData, "salvat")
+                        )
+                    }
+
                     return of(data.email).pipe(delay(1000))
                 }
             )
         ).subscribe(
-            res => console.log("fertich ", res)
+            res => {
+                console.log("fertich ", res)
+                auth.getUserInfo()
+                    .subscribe(
+                        user =>{
+                            if(user?.email){
+                                let userRef = fireStore.collection("users").doc(user?.email)
+                                userRef.get()
+                                    .pipe(
+                                        map((u:any) => u.data().chats),
+                                        take(1)
+                                    )
+                                    .subscribe(
+                                        (chats: any) => {
+                                            chatService.chats.next(chats)
+                                            router.navigate(["home"])
+                                        }
+                                    )
+                            }
+                        }
+                    )
+            }
         )
 
     }
@@ -81,9 +123,7 @@ export class AddNewGroupService {
                         //     }
                         // )
                         // chatRef.set({messages: []})
-                        set(ref(this.realtimeDatabase,"chats/"+uuid),{
-                            messages: [""]
-                        }).then(
+                        set(ref(this.realtimeDatabase, "chats/" + uuid), []).then(
                             res => console.log("cica s-a salvat", res)
                         )
                         groupRef.set({
